@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        .alert {
+            margin-top: 1em;
+            margin-bottom: 1em;
+            background-color: red;
+            color: white;
+        }
+
+        .d-none {
+            display: none;
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        body {
+            background-image: url("bg26.webp");
+            background-repeat: repeat-x;
+            background-size: 750px 750px;
+            padding: 40px;
+        }
+
+        h1 {
+            padding: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>Speedy Taxi office <i class="fa fa-map-marker" style="font-size:24px;color:black;"></i><br>
+            <i class="fa fa-bus" style="font-size:24px;color:black;"></i>
+            <i class="fa fa-plane" style="font-size:24px;color:black;"></i>
+            <i class="fa fa-train" style="font-size:24px;color:black;"></i>
+        </h1>
+        <p>Timestamp: <span id="timestamp"></span></p>
+        <p>Latitude : <span id="latitude"></span></p>
+        <p>Longitude: <span id="longitude"></span></p>
+        <p>Accuracy : <span id="accuracy"></span></p>
+        <button id="clickme"> Click Here</button>
+        <div id="errorArea" class="alert d-none"></div>
+        <div id="map"></div>
+    </div>
+    <!-- <a href="https://www.openstreetmap.org/?mlat=12.93432&mlon=77.60535#map=19/12.93432/77.60535"> Click For Map</a> -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        let getloc = document.getElementById("clickme");
+        getloc.addEventListener('click', event => {
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    document.getElementById("timestamp").innerText = new Date(pos.timestamp);
+                    document.getElementById("latitude").innerText = pos.coords.latitude;
+                    document.getElementById("longitude").innerText = pos.coords.longitude;
+                    document.getElementById("accuracy").innerText = pos.coords.accuracy;
+
+                    var map = L.map('map').setView([13.005459, 77.569199], 13);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(map);
+                    L.marker([13.005459, 77.569199]).addTo(map)
+                        .bindPopup('You are here')
+                        .openPopup();
+
+                    document.getElementById("map").classList.remove("d-none");
+
+                }, error => {
+                    let msg = "";
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED:
+                            msg = "User Denied Permission";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            msg = "Can't Locate User's Position";
+                            break;
+                        case error.TIMEOUT:
+                            msg = "Time out";
+                            break;
+                    }
+                    let errorArea = document.getElementById("errorArea");
+                    errorArea.innerHTML = msg;
+                    errorArea.classList.remove("d-none");
+                })
+
+            } else {
+                console.log("Update your browser to get Geolocation Object");
+            }
+
+        })
+    </script>
+
+</body>
+
+</html>

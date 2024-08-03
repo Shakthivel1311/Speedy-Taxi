@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxi Service Modal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <!-- Floating Button to Open the Modal -->
+        <button type="button" class="btn btn-primary floating-button" data-toggle="modal" data-target="#taxiModal">
+            <i class="fas fa-taxi"></i> Book a Taxi
+        </button>
+
+        <!-- The Modal -->
+        <div class="modal" id="taxiModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title"><i class="fas fa-taxi"></i> Book Your Taxi Now</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p><i class="fas fa-map-marker-alt"></i> Enter your pickup location:</p>
+                        <input type="text" class="form-control mb-3" placeholder="Pickup Location">
+                        <p><i class="fas fa-location-arrow"></i> Enter your destination:</p>
+                        <input type="text" class="form-control mb-3" placeholder="Destination">
+                        <p><i class="fas fa-clock"></i> Select pickup time:</p>
+                        <input type="time" class="form-control mb-3">
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success">Book Now</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
